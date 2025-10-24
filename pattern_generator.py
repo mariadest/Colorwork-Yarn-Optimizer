@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import pandas as pd
-from datetime import datetime
 
 def generate_chart(rows, cols, colors=2, cluster_prob=0.8):
     chart = np.zeros((rows, cols), dtype=int)
@@ -21,23 +20,22 @@ def generate_chart(rows, cols, colors=2, cluster_prob=0.8):
 
 def visualize_chart(chart, title, save_base=None, bold_grid=True, major_every=5):
     rows, cols = chart.shape
-    cmap = mcolors.ListedColormap(["#800020", "#fdf6e3"])  # Burgundy & Cream
+    cmap = mcolors.ListedColormap(["#800020", "#fdf6e3"]) 
 
     fig, ax = plt.subplots(figsize=(5, 5), facecolor="#e6e6e6")
     ax.set_aspect('equal', adjustable='box')
 
-    # Draw crisp squares with grid lines
+    # used to create the black grid
     ax.pcolormesh(
         np.arange(cols + 1), np.arange(rows + 1), chart,
         cmap=cmap, edgecolors='black', linewidth=0.6,
         shading='flat', antialiased=False
     )
 
-    # Top-left origin like knitting charts
     ax.set_xlim(0, cols)
     ax.set_ylim(rows, 0)
 
-    # Optional bold gridlines every n stitches
+    # add bold grid lines every 5 stitches
     if bold_grid and major_every:
         for x in range(0, cols + 1, major_every):
             ax.plot([x, x], [0, rows], color='black', linewidth=1.2)
@@ -47,7 +45,7 @@ def visualize_chart(chart, title, save_base=None, bold_grid=True, major_every=5)
     ax.axis('off')
     fig.suptitle(title, fontsize=14)
 
-    # Save all outputs if save_base provided
+    # saving outputs
     if save_base:
         base_name = f"{save_base}"
 

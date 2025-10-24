@@ -4,7 +4,7 @@ def convert_coordinates(row0, col0, R, C):
     j = C - col0        
     return (i, j)
 
-def snake_iter_indices(R, C):
+def get_S_traversal(R, C):
     for k, r0 in enumerate(range(R - 1, -1, -1)):
         cols = range(C - 1, -1, -1) if k % 2 == 0 else range(0, C)
         for c0 in cols:
@@ -14,12 +14,12 @@ def get_gaps(chart, color):
     R, C = len(chart), len(chart[0])
 
     gaps= []
-    run_start = None
-    last_match = None
+    run_start = None    # where a color run begins
+    last_match = None   # where a color run ends/most recent coordinate in the run
     first_b = None
     prev_e = None
-    for r0, c0 in snake_iter_indices(R, C):
-        print(f"({r0}, {c0})")
+    for r0, c0 in get_S_traversal(R, C):
+        # print(f"({r0}, {c0})")
         coord = convert_coordinates(r0, c0, R, C)
         if chart[r0][c0] == color:
             if run_start is None:
@@ -30,7 +30,7 @@ def get_gaps(chart, color):
         else:
             if run_start is not None:
                 # close run
-                b_i, e_i = run_start, last_match  # type: ignore[assignment]
+                b_i, e_i = run_start, last_match  
                 if prev_e is None:
                     # first gap is (b1, b1)
                     gaps.append((b_i, b_i))
@@ -42,7 +42,7 @@ def get_gaps(chart, color):
 
     # close trailing run
     if run_start is not None:
-        b_i, e_i = run_start, last_match  # type: ignore[assignment]
+        b_i, e_i = run_start, last_match  
         if prev_e is None:
             gaps.append((b_i, b_i))
         else:
