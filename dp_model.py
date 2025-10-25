@@ -8,7 +8,7 @@ def dp_cost(gaps, cut_cost=20, skein_penalty=20):
     def dist(a, b):
         return math.dist(a, b)
 
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=100_000)
     def cost(i, p1, p2, used1, used2):
         # base case: reached when all gaps have been looked at
         if i == n:
