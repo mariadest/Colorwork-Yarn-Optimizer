@@ -90,32 +90,59 @@ if __name__ == "__main__":
         "100x100_0.75",
         "100x100_0.95", 
     ]
-
-    results = []
-    for model in models:
-        for category in medium_categories:
-            for i in range(1, 21):
-                cost = run_experiment(model, f"Patterns/{category}/{category}_#{i}.npy")
-                results.append({
-                    "model": model,
-                    "chart number": i,
-                    "cost": cost
-                })
-                print(f"{model} solved {category}/{category}_#{i} with cost {cost}")
-
-    df = pd.DataFrame(results)
-    df.to_csv("50x50_results.csv", index=False)
     
-    """for model in models:
-        for category in large_categories:
+    cluster_probabilities = [
+        "0.05",
+        "0.25",
+        "0.5",
+        "0.75",
+        "0.95"
+    ]
+
+    """results_small = []
+    for model in models:
+        for cluster_prob in cluster_probabilities:
             for i in range(1, 21):
-                cost = run_big_experiment(model, f"Patterns/{category}/{category}_#{i}.npy")
-                results.append({
+                cost = run_experiment(model, f"Patterns/25x25_{cluster_prob}/25x25_{cluster_prob}_#{i}.npy")
+                results_small.append({
                     "model": model,
+                    "cluster probability": cluster_prob,
                     "chart number": i,
                     "cost": cost
                 })
-                print(f"{model} solved {category}/{category}_#{i} with cost {cost}")
+                print(f"{model} solved 25x25_{cluster_prob}_#{i} with cost {cost}")
 
-    df = pd.DataFrame(results)
-    df.to_csv("100x100_results.csv", index=False)"""
+    df = pd.DataFrame(results_small)
+    df.to_csv("25x25_results.csv", index=False)
+    
+    results_medium = []
+    for model in models:
+        for cluster_prob in cluster_probabilities:
+            for i in range(1, 21):
+                cost = run_experiment(model, f"Patterns/50x50_{cluster_prob}/50x50_{cluster_prob}_#{i}.npy")
+                results_medium.append({
+                    "model": model,
+                    "cluster probability": cluster_prob,
+                    "chart number": i,
+                    "cost": cost
+                })
+                print(f"{model} solved 50x50_{cluster_prob}_#{i} with cost {cost}")
+
+    df = pd.DataFrame(results_medium)
+    df.to_csv("50x50_results.csv", index=False)"""
+    
+    results_large = []
+    for model in models:
+        for cluster_prob in cluster_probabilities:
+            for i in range(1, 21):
+                cost = run_big_experiment(model, f"Patterns/100x100_{cluster_prob}/100x100_{cluster_prob}_#{i}.npy")
+                results_large.append({
+                    "model": model,
+                    "cluster probability": cluster_prob,
+                    "chart number": i,
+                    "cost": cost
+                })
+                print(f"{model} solved 100x100_{cluster_prob}_#{i} with cost {cost}")
+
+    df = pd.DataFrame(results_large)
+    df.to_csv("100x100_results.csv", index=False)
