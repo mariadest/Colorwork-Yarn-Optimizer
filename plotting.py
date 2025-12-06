@@ -79,7 +79,6 @@ def boxplot_by_cluster(df, y, ylabel, title):
         ax.set_title(f"{title} ({size})")
         ax.set_xlabel("Cluster Probability")
 
-        # 👇 NEW: add size to the y-axis label
         ax.set_ylabel(f"{ylabel} ({size})")
 
         ax.set_xticks(group_positions)
