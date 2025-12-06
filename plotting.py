@@ -76,9 +76,12 @@ def boxplot_by_cluster(df, y, ylabel, title):
             for box in bp["boxes"]:
                 box.set(facecolor=face, edgecolor="black", alpha=0.75)
 
-        ax.set_title(f"{title} (size {size})")
+        ax.set_title(f"{title} ({size})")
         ax.set_xlabel("Cluster Probability")
-        ax.set_ylabel(ylabel)
+
+        # 👇 NEW: add size to the y-axis label
+        ax.set_ylabel(f"{ylabel} ({size})")
+
         ax.set_xticks(group_positions)
         ax.set_xticklabels([f"{cp:g}" for cp in cluster_probs])
         ax.set_xlim(group_positions[0] - 0.6, group_positions[-1] + 0.6)
@@ -92,20 +95,21 @@ def boxplot_by_cluster(df, y, ylabel, title):
         fig.tight_layout()
         plt.show()
 
+
 # ----------------------------------------------------
 # PLOTS
 # ----------------------------------------------------
 
 boxplot_by_cluster(df, "cost", "Yarn Cost",
-                   "Yarn Cost Across Cluster Probabilities and Models")
+                   "Yarn Cost across Cluster Probabilities")
 boxplot_by_cluster(df, "loose_ends_per_100", "Loose Ends per 100 Stitches",
-                   "Loose Ends Across Cluster Probabilities and Models")
-boxplot_by_cluster(df, "interruptions_per_100", "Interruptions per 100 Stitches",
-                   "Crochet Flow Interruptions Across Models")
+                   "Loose Ends across Cluster Probabilities")
+#boxplot_by_cluster(df, "interruptions_per_100", "Interruptions per 100 Stitches",
+                   #"Crochet Flow Interruptions Across Models")
 boxplot_by_cluster(df, "float_cut_ratio", "Float / Cut Ratio",
-                   "Float vs Cutting Strategy Balance Across Models")
-boxplot_by_cluster(df, "floats_per_100", "Floats per 100 Stitches",
-                   "Float Frequency Across Models")
+                   "Floats-to-Cuts across Cluster Probabilities")
+#boxplot_by_cluster(df, "floats_per_100", "Floats per 100 Stitches",
+                   #"Float Frequency Across Models")
 
 
 
